@@ -2,12 +2,13 @@ import './App.css';
 import Test from "./components/Test";
 import Employee from "./components/Employee"
 import Accordion from "./components/Accordion"
+import Balok from './pages/Balok';
 
 
 
 function App() {
   return (
-    <div className='App'>
+    /*<div className='App'>
     <h3 align="center">
     5 Fakta Menarik Ganyu
       </h3>  
@@ -22,8 +23,12 @@ function App() {
       division="Software Developer"
       image="https://www.seekpng.com/png/detail/169-1692416_depressed-crying-shinji-sad-boys-phone-case.png"
       />
-    </div>
-    
+    </div>*/
+     <div> 
+           <Balok title="Bantal"></Balok>
+
+     </div>
+  
   );
 }
 
