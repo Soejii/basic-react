@@ -26,6 +26,7 @@ function App() {
     </div>*/
      <div> 
            <Balok title="Bantal"></Balok>
+           <Balok title="Kasur"></Balok>
 
      </div>
   

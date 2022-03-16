@@ -43,7 +43,7 @@ function Balok(props) {
                     Hitung
                 </button>
                 <h4 className="text-primary">
-                    {`Volume ${props.title}: ${volume} `}
+                    {`Volume dari ${props.title}: ${volume} `}
                 </h4>
             </div>
         </div>
