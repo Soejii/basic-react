@@ -1,111 +1,137 @@
 import { useState, useEffect } from "react"
-/*
-useState digunakan untuk mendefiniskan state
-useEffect sebuah fungsi yang dijalankan (dieksekusi) ketika komponennya telah ditampilkan
+/**
+ * useState -> utk mendefinisikan state 
+ * useEddect -> fungsi yg dijalankan (dieksekusi)
+ * ketika komponennya telah ditampilkan
+ * 
+ */
+import { Modal } from "bootstrap"
 
-*/
-import { Modal } from "bootstrap";
-
-function Student(props) {
+export default function Student(props) {
     let [students, setStudents] = useState([])
     let [modalStudent, setModalStudent] = useState(null)
     let [id, setId] = useState(0)
     let [name, setName] = useState("")
     let [birthdate, setBirthdate] = useState(0)
     let [action, setAction] = useState("")
+   let [editId, setEditId] = useState(true)
 
     useEffect(() => {
-        //inisiasi data array student
-        let arrayStudents = [
-            { id: 1, name: "Soeji", birthdate: 2004 },
-            { id: 2, name: "Faiz Wibu", birthdate: 1992 }
+        // inisiasi data array students
+        let arrayStudents =[
+            {id: 1, name: `Soeji`, birthdate: 2004},
+            {id: 2, name: `Dika`, birthdate: 1998},
         ]
         setStudents(arrayStudents)
 
-        //inisiasi state modal studnet
+        // inisiasi state modal student
         setModalStudent(new Modal(document.getElementById(`modal_student`)))
     }, [])
 
-    //function add student
-
+    // function addStudent
     let addStudent = () => {
-        //open modal
+        // open modal
         modalStudent.show()
 
-        //reset isi dari setiap inputan
+        // reset isi dari setiap inputan
         setId(0)
         setName("")
         setBirthdate(0)
         setAction("insert")
+        setEditId(true)
     }
 
-    // function save student
+    // function saveStudent
     let saveStudent = () => {
         // close modal
         modalStudent.hide()
-        if (action === `insert`) {
+        if (action === `insert`){
             let newData = {
-                id: id,
-                name: name,
-                birthdate: birthdate
+                id: id, name: name, birthdate: birthdate
             }
 
             // store array from students
             let temp = [...students]
-            // add new data
-            temp.push(newData)        
-            // store to student again 
+            // add newdata
+            temp.push(newData)
+            // store to students again
+            setStudents(temp)
+        } else if (action === `edit`) {
+            // store data students to temp
+            let temp = [...Student]
+
+            // find index of selected data by ID
+            let index = temp.findIndex(siswa => siswa.id === id)
+
+            // update data on founded index
+            temp[index].name = name
+            temp[index].birthdate = birthdate
+
+            // restore to student compile
             setStudents(temp)
         }
     }
-    return (
-        <div>
+
+    // function edit student
+    let editStudent = siswa => {
+        // open the modal
+        modalStudent.show()
+        setId(siswa.id)
+        setName(siswa.name)
+        setBirthdate(siswa.birthdate)
+        setAction(`edit`)
+        setEditId(false)
+    }
+
+    // function delete student
+    let deleteStudent = siswa => {
+        
+    }
+
+    return(
+        <div className="container-fluid">
             <div className="card col-10">
-                <div className="card-header bg-success">
-                    <h3 className="text-white">
-                        List of My Student
-                    </h3>
+                <div className="card-header bg-primary">
+                    <h3 className="text-white">My Student</h3>
                 </div>
                 <div className="card-body">
-                    {/*
-                    .map adalah sebuah fungsi dari array untuk scanning setiap data dalam array
-                    */}
-                    {students.map(item => (
-                        <div className="row" key={`key${item.id}`}>
+                    {students.map(siswa => (
+                        <div className="row" key={`key${siswa.id}`} >
                             <div className="col-2">
-                                <small>
-                                    ID
-                                </small>
-                                <h5>
-                                    {item.id}
-                                </h5>
+                                <small>ID</small>
+                                <h5>{siswa.id}</h5>
                             </div>
                             <div className="col-4">
-                                <small>
-                                    Name
-                                </small>
-                                <h5>
-                                    {item.name}
-                                </h5>
+                                <small>Name</small>
+                                <h5>{siswa.name}</h5>
                             </div>
                             <div className="col-4">
-                                <small>
-                                    Birthday
-                                </small>
-                                <h5>
-                                    {item.birthdate}
-                                </h5>
+                                <small>Date of Birth</small>
+                                <h5>{siswa.birthdate}</h5>
                             </div>
+                            <diV className="col-2">
+                                {/**edit button */}
+                                <button className="btn btn-outline-primary mx-1"
+                                onClick={() => editStudent(siswa)}>
+                                    Edit
+                                </button>
+
+                                {/**delete button */}
+                                <button className="btn btn-danger mx-1"
+                                onClick={() => deleteStudent(siswa)}>
+                                    Delete
+                                </button>
+                            </diV>
                         </div>
                     ))}
 
-                    {/*button add data */}
-                    <button className="btn btn-danger"
+                    {/** button add data */}
+                    <button className="btn btn-outline-success mt-2"
                     onClick={() => addStudent()}>
-                        Add
+                        Tambah Siswa
                     </button>
 
-                    {/* Modal Component */}
+                    {/** modal component */}
                     <div className="modal" id="modal_student">
                         <div className="modal-dialog">
                             <div className="modal-content">
@@ -113,38 +139,39 @@ function Student(props) {
                                     <h4>Form Student</h4>
                                 </div>
                                 <div className="modal-body">
-                                    {/* input untuk id, nama , birthdate */}
+                                    {/** input for ID, Name, Birthdate */}
                                     ID
                                     <input type={`number`}
-                                        className="form-control mb-2" 
-                                        value={id}
-                                        onChange={ev => setId(ev.target.value)}/>
+                                    className="form-control mb-2"
+                                    value={id}
+                                    onChange={ev => setId(ev.target.value)} 
+                                    readOnly={!editId}/>
+                                    {/** saat add student, editId = true 
+                                     * oleh krn itu readonly harus false
+                                    */}
 
                                     Name
                                     <input type={`text`}
-                                        className="form-control mb-2" 
-                                        value={name}
-                                        onChange={ev => setName(ev.target.value)}/>
+                                    className="form-control mb-2"
+                                    value={name}
+                                    onChange={ev => setName(ev.target.value)}/>
 
-                                    BirthYear
-                                    <input type={`number`}
-                                        className="form-control mb-2" 
-                                        value={birthdate}
-                                        onChange={ev => setBirthdate(ev.target.value)}/>
+                                    Birth Year
+                                    <input type={`text`}
+                                    className="form-control mb-2"
+                                    value={birthdate}
+                                    onChange={ev => setBirthdate(ev.target.value)}/>
 
-                                    <button className="btn btn-info"
-                                    onClick={() => saveStudent()} >
-                                        
-                                        Add
+                                    <button className="btn-sm btn-success mt-2"
+                                    onClick={() => saveStudent()}>
+                                        Simpan
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/* end of modal*/}
                 </div>
             </div>
         </div>
     )
 }
-export default Student
