@@ -58,7 +58,7 @@ export default function Student(props) {
             setStudents(temp)
         } else if (action === `edit`) {
             // store data students to temp
-            let temp = [...Student]
+            let temp = [...students]
 
             // find index of selected data by ID
             let index = temp.findIndex(siswa => siswa.id === id)
@@ -157,7 +157,7 @@ export default function Student(props) {
                                     onChange={ev => setName(ev.target.value)}/>
 
                                     Birth Year
-                                    <input type={`text`}
+                                    <input type={`number`}
                                     className="form-control mb-2"
                                     value={birthdate}
                                     onChange={ev => setBirthdate(ev.target.value)}/>
