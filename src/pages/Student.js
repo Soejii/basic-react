@@ -37,7 +37,7 @@ export default function Student(props) {
         setId(0)
         setName("")
         setBirthdate(0)
-        setAction("insert")
+        setAction("insert")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
         setEditId(true)
     }
 
@@ -85,7 +85,19 @@ export default function Student(props) {
 
     // function delete student
     let deleteStudent = siswa => {
-        
+        if(window.confirm('this data will get deleted,Are you sure?')){
+            //store array student to temp
+            let temp = [...students]
+
+            //find index of selected data in students array
+            let index = temp.findIndex(sis => sis.id === siswa.id)
+
+            // delete data form array based on found index
+            temp.splice(index, 1)
+
+            //restore to array student
+            setStudents(temp)
+        }
     }
 
     return(
