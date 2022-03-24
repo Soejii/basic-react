@@ -4,15 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Student from './pages/Student';
+import Book from './pages/Book';
 
-// Load library for styling
+// load library bootstrap for styling
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
+import StudentAverage from './pages/StudentAverage';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Student />
-  </React.StrictMode>,
+    <StudentAverage/>,
   document.getElementById('root')
 );
 

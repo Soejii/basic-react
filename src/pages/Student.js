@@ -37,7 +37,7 @@ export default function Student(props) {
         setId(0)
         setName("")
         setBirthdate(0)
-        setAction("insert")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
+        setAction("insert")
         setEditId(true)
     }
 
@@ -142,6 +142,26 @@ export default function Student(props) {
                     onClick={() => addStudent()}>
                         Tambah Siswa
                     </button>
+                    {/* 
+                    Create drop down using name
+                    */}
+                    <select>
+                        {students.map(item => (
+                            <option value={item}>
+                            {item.name}
+                            </option>
+                        ))}
+                    </select>
+                     {/* 
+                    Create radio using 
+                    */}
+                        {students.map(item => (
+                            <div>
+                                <input type ={`radio`} name={`name`} value={`item.id`}/>
+                                <label>{item.name}:({item.birthdate}) </label>
+                            </div>
+
+                        ))}
 
                     {/** modal component */}
                     <div className="modal" id="modal_student">
